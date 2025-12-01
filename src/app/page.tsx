@@ -1,4 +1,7 @@
 import Image from "next/image";
+import Search from "./components/search";
+import Link from "next/link";
+import AnimiranNaslov from "./components/animatedHeader";
 
 
 
@@ -22,25 +25,33 @@ console.log(movies);
 
 
   return (
+    <>
+    <div className="container">
+      <Search />
+    <AnimiranNaslov />
    <div className="grid">
   {
     movies.results.map((movie: any) => (
+      <Link href={"/movie/" + movie.id} key={movie.id}>
       <div className="card" key={movie.id}>
-        <h2>{movie.title}</h2>
-        <p>{movie.release_date}</p>
-        <Image
+        <p>{movie.id}</p>
+            <Image
           className="movie_poster"
           src={"https://image.tmdb.org/t/p/w500" + movie.poster_path}
           alt={movie.title}
-          width={200}
-          height={300}
-          
+          fill={true}
         />
-        <p>{movie.overview}</p>
+        <div className="movie_details">
+        <h2>{movie.title}</h2>
+        <p className="info">Release Date: {movie.release_date}</p>
+        </div>
       </div>
+      </Link>
     ))  
   }
    </div>
+   </div>
+   </>
   );
 }
 
