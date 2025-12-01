@@ -21,7 +21,6 @@ const options = {
 export default async function Home() {
 let response = await fetch(url, options);
 let movies = await response.json();
-console.log(movies);
 
 
   return (
