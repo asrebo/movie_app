@@ -44,7 +44,7 @@ export default async function Home() {
                   	style={{objectFit: "cover"}}
                     src={"https://image.tmdb.org/t/p/w500" + movie.poster_path}
                     alt={movie.title}
-                    fill={true}
+                  fill={true}
                   />
                   <div className="movie_details">
                     <h2>{movie.title}</h2>
