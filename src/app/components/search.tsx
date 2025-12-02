@@ -16,7 +16,7 @@ export default function Search() {
     time: ReturnType<typeof setTimeout> | null;
   };
   const debounceTimer = useRef<DebounceTimer>({ time: null });
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
 
 
   useEffect(() => {
@@ -28,8 +28,9 @@ export default function Search() {
   }, []);
 
   useEffect(() => {
-    function handleClickOutside(e) {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+    function handleClickOutside(e: MouseEvent) {
+
+      if (dropdownRef.current && e.target && !dropdownRef.current.contains(e.target as Node)) {
         setIsOpen(false);
       }
     }
@@ -68,7 +69,7 @@ export default function Search() {
     }
   };
 
-  const InputChange = (e) => {
+  const InputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setQuery(value);
 
@@ -80,8 +81,6 @@ export default function Search() {
       searchMovies(value);
     }, 500);
   };
-
-
 
   return (
     <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto', zIndex: 10 }}>

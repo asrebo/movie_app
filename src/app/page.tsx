@@ -11,46 +11,52 @@ const options = {
   method: 'GET',
   headers: {
     accept: 'application/json',
-    Authorization: 'Bearer '+ process.env.API_KEY
+    Authorization: 'Bearer ' + process.env.API_KEY
   }
 };
 
+  type Movie = {
+    id: number;
+    title: string;
+    poster_path: string;
+    release_date: string;
+  }
 
 
 
 export default async function Home() {
-let response = await fetch(url, options);
-let movies = await response.json();
+  const response = await fetch(url, options);
+  const movies = await response.json();
 
 
   return (
     <>
-    <div className="container">
-      <Search />
-    <AnimiranNaslov />
-   <div className="grid">
-  {
-    movies.results.map((movie: any) => (
-      <Link href={"/movie/" + movie.id} key={movie.id}>
-      <div className="card" key={movie.id}>
-        <p>{movie.id}</p>
-            <Image
-          className="movie_poster"
-          src={"https://image.tmdb.org/t/p/w500" + movie.poster_path}
-          alt={movie.title}
-          fill={true}
-        />
-        <div className="movie_details">
-        <h2>{movie.title}</h2>
-        <p className="info">Release Date: {movie.release_date}</p>
+      <div className="container">
+        <Search />
+        <AnimiranNaslov />
+        <div className="grid">
+          {
+            movies.results.map((movie : Movie) => (
+              <Link href={"/movie/" + movie.id} key={movie.id}>
+                <div className="card" key={movie.id}>
+                  <p>{movie.id}</p>
+                  <Image
+                  	style={{objectFit: "cover"}}
+                    src={"https://image.tmdb.org/t/p/w500" + movie.poster_path}
+                    alt={movie.title}
+                    fill={true}
+                  />
+                  <div className="movie_details">
+                    <h2>{movie.title}</h2>
+                    <p className="info">Release Date:{movie.release_date}</p>
+                  </div>
+                </div>
+              </Link>
+            ))
+          }
         </div>
       </div>
-      </Link>
-    ))  
-  }
-   </div>
-   </div>
-   </>
+    </>
   );
 }
 
