@@ -2,7 +2,7 @@
 
 ## Getting Started
 
-!!!before run please provide .env file with API_KEY variable!!!
+!!!before run please provide .env file with API_KEY variable or add arg at docker build!!!
 
 
 ```bash

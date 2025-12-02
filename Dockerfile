@@ -12,6 +12,8 @@ RUN npm ci
 # Stage 2: Builder
 FROM node:22-alpine AS builder
 WORKDIR /app
+# add api key to run app
+ARG API_KEY
 
 # Copy dependencies from deps stage
 COPY --from=deps /app/node_modules ./node_modules
@@ -20,6 +22,7 @@ COPY . .
 
 # Disable telemetry during build
 ENV NEXT_TELEMETRY_DISABLED 1
+ENV API_KEY=$API_KEY
 
 # Build the application
 RUN npm run build
@@ -27,7 +30,11 @@ RUN npm run build
 # Stage 3: Runner
 FROM node:22-alpine AS runner
 WORKDIR /app
+#provide api in this stage as well
+ARG API_KEY
 
+
+ENV API_KEY=$API_KEY
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
 
